@@ -1,6 +1,9 @@
 package class123;
 
-// 选择节点做根使其流量最大(迭代版)
+// 选择节点做根使流量和最大(迭代版)
+// 给定一棵n个点的树，边的边权代表流量限制
+// 从边上流过的流量，不能超过流量限制
+// 现在想知道以某个节点做根时，流到所有叶节点的流量，最大是多少
 // 测试链接 : http://poj.org/problem?id=3585
 // 提交以下的code，提交时请把类名改成"Main"，可以通过所有用例
 
@@ -12,7 +15,7 @@ import java.io.PrintWriter;
 import java.io.StreamTokenizer;
 import java.util.Arrays;
 
-public class Code02_MaximizeFlow2 {
+public class Code04_MaximizeFlow2 {
 
 	public static int MAXN = 200001;
 
@@ -90,10 +93,10 @@ public class Code02_MaximizeFlow2 {
 				for (int e = head[u], v; e != 0; e = next[e]) {
 					v = to[e];
 					if (v != f) {
-						if (degree[v] > 1) {
-							flow[u] += Math.min(flow[v], weight[e]);
-						} else {
+						if (degree[v] == 1) {
 							flow[u] += weight[e];
+						} else {
+							flow[u] += Math.min(flow[v], weight[e]);
 						}
 					}
 				}
@@ -120,7 +123,8 @@ public class Code02_MaximizeFlow2 {
 					if (degree[u] == 1) {
 						dp[v] = flow[v] + weight[e];
 					} else {
-						dp[v] = flow[v] + Math.min(dp[u] - Math.min(flow[v], weight[e]), weight[e]);
+						int uOut = dp[u] - Math.min(flow[v], weight[e]);
+						dp[v] = flow[v] + Math.min(uOut, weight[e]);
 					}
 					push(v, u, -1);
 				}

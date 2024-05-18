@@ -1,12 +1,15 @@
 package class123;
 
-// 最大深度和(递归版)
-// 给定一棵n个点的树，找到一个节点，使得以这个节点为根时，到达所有节点的深度之和最大
-// 如果有多个节点满足要求，返回节点编号最小的
-// 测试链接 : https://www.luogu.com.cn/problem/P3478
+// 每个节点距离k以内的权值和(递归版)
+// 给定一棵n个点的树，每个点有点权
+// 到达每个节点的距离不超过k的节点就有若干个
+// 把这些节点权值加起来，就是该点不超过距离k的点权和
+// 打印每个节点不超过距离k的点权和
+// 注意k并不大
+// 测试链接 : https://www.luogu.com.cn/problem/P3047
 // 提交以下的code，提交时请把类名改成"Main"
 // C++这么写能通过，java会因为递归层数太多而爆栈
-// java能通过的写法参考本节课Code01_MaximizeSumOfDeeps2文件
+// java能通过的写法参考本节课Code05_SumOfNearby2文件
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -16,11 +19,15 @@ import java.io.PrintWriter;
 import java.io.StreamTokenizer;
 import java.util.Arrays;
 
-public class Code01_MaximizeSumOfDeeps1 {
+public class Code05_SumOfNearby1 {
 
-	public static int MAXN = 1000001;
+	public static int MAXN = 100001;
+
+	public static int MAXK = 21;
 
 	public static int n;
+
+	public static int k;
 
 	public static int[] head = new int[MAXN];
 
@@ -30,11 +37,11 @@ public class Code01_MaximizeSumOfDeeps1 {
 
 	public static int cnt;
 
-	public static int[] size = new int[MAXN];
+	// sum[u][i] : 以u为头的子树内，距离为i的节点权值和
+	public static int[][] sum = new int[MAXN][MAXK];
 
-	public static long[] sum = new long[MAXN];
-
-	public static long[] dp = new long[MAXN];
+	// dp[u][i] : 以u做根，整棵树上，距离为i的节点权值和
+	public static int[][] dp = new int[MAXN][MAXK];
 
 	public static void build() {
 		cnt = 1;
@@ -54,13 +61,12 @@ public class Code01_MaximizeSumOfDeeps1 {
 				dfs1(v, u);
 			}
 		}
-		size[u] = 1;
-		sum[u] = 0;
 		for (int e = head[u], v; e != 0; e = next[e]) {
 			v = to[e];
 			if (v != f) {
-				size[u] += size[v];
-				sum[u] += sum[v] + size[v];
+				for (int j = 1; j <= k; j++) {
+					sum[u][j] += sum[v][j - 1];
+				}
 			}
 		}
 	}
@@ -69,7 +75,11 @@ public class Code01_MaximizeSumOfDeeps1 {
 		for (int e = head[u], v; e != 0; e = next[e]) {
 			v = to[e];
 			if (v != f) {
-				dp[v] = dp[u] - size[v] + n - size[v];
+				dp[v][0] = sum[v][0];
+				dp[v][1] = sum[v][1] + dp[u][0];
+				for (int i = 2; i <= k; i++) {
+					dp[v][i] = sum[v][i] + dp[u][i - 1] - sum[v][i - 2];
+				}
 				dfs2(v, u);
 			}
 		}
@@ -82,6 +92,8 @@ public class Code01_MaximizeSumOfDeeps1 {
 		in.nextToken();
 		n = (int) in.nval;
 		build();
+		in.nextToken();
+		k = (int) in.nval;
 		for (int i = 1, u, v; i < n; i++) {
 			in.nextToken();
 			u = (int) in.nval;
@@ -90,18 +102,22 @@ public class Code01_MaximizeSumOfDeeps1 {
 			addEdge(u, v);
 			addEdge(v, u);
 		}
-		dfs1(1, 0);
-		dp[1] = sum[1];
-		dfs2(1, 0);
-		long max = Long.MIN_VALUE;
-		int ans = 0;
 		for (int i = 1; i <= n; i++) {
-			if (dp[i] > max) {
-				max = dp[i];
-				ans = i;
-			}
+			in.nextToken();
+			sum[i][0] = (int) in.nval;
 		}
-		out.println(ans);
+		dfs1(1, 0);
+		for (int i = 0; i <= k; i++) {
+			dp[1][i] = sum[1][i];
+		}
+		dfs2(1, 0);
+		for (int i = 1, ans; i <= n; i++) {
+			ans = 0;
+			for (int j = 0; j <= k; j++) {
+				ans += dp[i][j];
+			}
+			out.println(ans);
+		}
 		out.flush();
 		out.close();
 		br.close();

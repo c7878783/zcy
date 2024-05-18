@@ -1,10 +1,13 @@
 package class123;
 
-// 选择节点做根使其流量最大(递归版)
+// 选择节点做根使流量和最大(递归版)
+// 给定一棵n个点的树，边的边权代表流量限制
+// 从边上流过的流量，不能超过流量限制
+// 现在想知道以某个节点做根时，流到所有叶节点的流量，最大是多少
 // 测试链接 : http://poj.org/problem?id=3585
 // 提交以下的code，提交时请把类名改成"Main"
 // C++这么写能通过，java会因为递归层数太多而爆栈
-// java能通过的写法参考本节课Code02_MaximizeFlow2文件
+// java能通过的写法参考本节课Code04_MaximizeFlow2文件
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -14,7 +17,7 @@ import java.io.PrintWriter;
 import java.io.StreamTokenizer;
 import java.util.Arrays;
 
-public class Code02_MaximizeFlow1 {
+public class Code04_MaximizeFlow1 {
 
 	public static int MAXN = 200001;
 
@@ -30,10 +33,13 @@ public class Code02_MaximizeFlow1 {
 
 	public static int cnt;
 
+	// degree[u] : 有几条边和u节点相连
 	public static int[] degree = new int[MAXN];
 
+	// flow[u] : 从u出发流向u节点为头的子树上，所有的叶节点，流量是多少
 	public static int[] flow = new int[MAXN];
 
+	// dp[u] : 从u出发流向u节点为根的整棵树上，所有的叶节点，流量是多少
 	public static int[] dp = new int[MAXN];
 
 	public static void build() {
@@ -61,10 +67,10 @@ public class Code02_MaximizeFlow1 {
 		for (int e = head[u], v; e != 0; e = next[e]) {
 			v = to[e];
 			if (v != f) {
-				if (degree[v] > 1) {
-					flow[u] += Math.min(flow[v], weight[e]);
-				} else {
+				if (degree[v] == 1) {
 					flow[u] += weight[e];
+				} else {
+					flow[u] += Math.min(flow[v], weight[e]);
 				}
 			}
 		}
@@ -77,7 +83,9 @@ public class Code02_MaximizeFlow1 {
 				if (degree[u] == 1) {
 					dp[v] = flow[v] + weight[e];
 				} else {
-					dp[v] = flow[v] + Math.min(dp[u] - Math.min(flow[v], weight[e]), weight[e]);
+					// uOut : u流向外的流量
+					int uOut = dp[u] - Math.min(flow[v], weight[e]);
+					dp[v] = flow[v] + Math.min(uOut, weight[e]);
 				}
 				dfs2(v, u);
 			}

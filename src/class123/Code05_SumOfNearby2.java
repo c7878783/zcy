@@ -1,6 +1,10 @@
 package class123;
 
 // 每个节点距离k以内的权值和(迭代版)
+// 给定一棵n个点的树，每个点有点权
+// 到达每个节点的距离不超过k的节点就有若干个
+// 把这些节点权值加起来，就是该点不超过距离k的点权和
+// 打印每个节点不超过距离k的点权和
 // 注意k并不大
 // 测试链接 : https://www.luogu.com.cn/problem/P3047
 // 提交以下的code，提交时请把类名改成"Main"，可以通过所有用例
@@ -13,7 +17,7 @@ import java.io.PrintWriter;
 import java.io.StreamTokenizer;
 import java.util.Arrays;
 
-public class Code03_SumOfNearby2 {
+public class Code05_SumOfNearby2 {
 
 	public static int MAXN = 100001;
 
@@ -33,7 +37,7 @@ public class Code03_SumOfNearby2 {
 
 	public static int[][] sum = new int[MAXN][MAXK];
 
-	public static int[] ans = new int[MAXN];
+	public static int[][] dp = new int[MAXN][MAXK];
 
 	public static void build() {
 		cnt = 1;
@@ -104,33 +108,18 @@ public class Code03_SumOfNearby2 {
 		while (stackSize > 0) {
 			pop();
 			if (e == -1) {
-				for (int i = 0; i <= k; i++) {
-					ans[u] += sum[u][i];
-				}
 				e = head[u];
 			} else {
-				int v = to[e];
-				if (v != f) {
-					// 这里的v是之前的子节点
-					// 调整回来
-					for (int i = 1; i <= k; i++) {
-						sum[v][i] -= sum[u][i - 1];
-					}
-					for (int i = 1; i <= k; i++) {
-						sum[u][i] += sum[v][i - 1];
-					}
-				}
 				e = next[e];
 			}
 			if (e != 0) {
 				push(u, f, e);
 				int v = to[e];
 				if (v != f) {
-					for (int i = 1; i <= k; i++) {
-						sum[u][i] -= sum[v][i - 1];
-					}
-					for (int i = 1; i <= k; i++) {
-						sum[v][i] += sum[u][i - 1];
+					dp[v][0] = sum[v][0];
+					dp[v][1] = sum[v][1] + dp[u][0];
+					for (int i = 2; i <= k; i++) {
+						dp[v][i] = sum[v][i] + dp[u][i - 1] - sum[v][i - 2];
 					}
 					push(v, u, -1);
 				}
@@ -160,9 +149,16 @@ public class Code03_SumOfNearby2 {
 			sum[i][0] = (int) in.nval;
 		}
 		dfs1(1);
+		for (int i = 0; i <= k; i++) {
+			dp[1][i] = sum[1][i];
+		}
 		dfs2(1);
-		for (int i = 1; i <= n; i++) {
-			out.println(ans[i]);
+		for (int i = 1, ans; i <= n; i++) {
+			ans = 0;
+			for (int j = 0; j <= k; j++) {
+				ans += dp[i][j];
+			}
+			out.println(ans);
 		}
 		out.flush();
 		out.close();

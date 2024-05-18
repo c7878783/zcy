@@ -24,7 +24,11 @@ public class Code05_TransportPlan2 {
 
 	public static int MAXM = 300001;
 
-	public static int[] cnt = new int[MAXN];
+	public static int n;
+
+	public static int m;
+
+	public static int[] num = new int[MAXN];
 
 	public static int[] headEdge = new int[MAXN];
 
@@ -54,15 +58,15 @@ public class Code05_TransportPlan2 {
 
 	public static int[] quesv = new int[MAXM];
 
+	public static int[] distance = new int[MAXN];
+
 	public static int[] lca = new int[MAXM];
 
 	public static int[] cost = new int[MAXM];
 
-	public static int[] distance = new int[MAXN];
+	public static int maxCost;
 
-	public static int maxcost;
-
-	public static void build(int n) {
+	public static void build() {
 		tcnt = qcnt = 1;
 		Arrays.fill(headEdge, 1, n + 1, 0);
 		Arrays.fill(headQuery, 1, n + 1, 0);
@@ -70,7 +74,7 @@ public class Code05_TransportPlan2 {
 		for (int i = 1; i <= n; i++) {
 			unionfind[i] = i;
 		}
-		maxcost = 0;
+		maxCost = 0;
 	}
 
 	public static void addEdge(int u, int v, int w) {
@@ -148,13 +152,34 @@ public class Code05_TransportPlan2 {
 						i = queryIndex[q];
 						lca[i] = find(v);
 						cost[i] = distance[u] + distance[v] - 2 * distance[lca[i]];
-						maxcost = Math.max(maxcost, cost[i]);
+						maxCost = Math.max(maxCost, cost[i]);
 					}
 				}
 				unionfind[u] = f;
 			}
 		}
 	}
+
+	public static boolean f(int limit) {
+		atLeast = maxCost - limit;
+		Arrays.fill(num, 1, n + 1, 0);
+		beyond = 0;
+		for (int i = 1; i <= m; i++) {
+			if (cost[i] > limit) {
+				num[quesu[i]]++;
+				num[quesv[i]]++;
+				num[lca[i]] -= 2;
+				beyond++;
+			}
+		}
+		return beyond == 0 || dfs(1);
+	}
+
+	// 至少要减少多少边权
+	public static int atLeast;
+
+	// 超过要求的运输计划有几个
+	public static int beyond;
 
 	// dfs方法的递归版改迭代版
 	// 不会改看讲解118，讲了怎么从递归版改成迭代版
@@ -177,10 +202,10 @@ public class Code05_TransportPlan2 {
 				for (int e = headEdge[u], v; e != 0; e = edgeNext[e]) {
 					v = edgeTo[e];
 					if (v != f) {
-						cnt[u] += cnt[v];
+						num[u] += num[v];
 					}
 				}
-				if (cnt[u] >= beyond && w >= atLeast) {
+				if (num[u] == beyond && w >= atLeast) {
 					return true;
 				}
 			}
@@ -188,32 +213,15 @@ public class Code05_TransportPlan2 {
 		return false;
 	}
 
-	public static int beyond, atLeast;
-
-	public static boolean check(int n, int m, int limit) {
-		Arrays.fill(cnt, 1, n + 1, 0);
-		beyond = 0;
-		for (int i = 1; i <= m; i++) {
-			if (cost[i] > limit) {
-				cnt[quesu[i]]++;
-				cnt[quesv[i]]++;
-				cnt[lca[i]] -= 2;
-				beyond++;
-			}
-		}
-		atLeast = maxcost - limit;
-		return beyond == 0 || dfs(1);
-	}
-
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StreamTokenizer in = new StreamTokenizer(br);
 		PrintWriter out = new PrintWriter(new OutputStreamWriter(System.out));
 		in.nextToken();
-		int n = (int) in.nval;
-		build(n);
+		n = (int) in.nval;
+		build();
 		in.nextToken();
-		int m = (int) in.nval;
+		m = (int) in.nval;
 		for (int i = 1, u, v, w; i < n; i++) {
 			in.nextToken();
 			u = (int) in.nval;
@@ -234,23 +242,24 @@ public class Code05_TransportPlan2 {
 			addQuery(u, v, i);
 			addQuery(v, u, i);
 		}
-		out.println(compute(n, m));
+		out.println(compute());
 		out.flush();
 		out.close();
 		br.close();
 	}
 
-	public static int compute(int n, int m) {
+	public static int compute() {
 		tarjan(1);
-		int l = 0, r = maxcost, mid;
+		int l = 0, r = maxCost, mid;
 		int ans = 0;
 		while (l <= r) {
 			mid = (l + r) / 2;
-			if (check(n, m, mid)) {
+			if (f(mid)) {
 				ans = mid;
 				r = mid - 1;
-			} else
+			} else {
 				l = mid + 1;
+			}
 		}
 		return ans;
 	}

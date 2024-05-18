@@ -26,8 +26,14 @@ public class Code05_TransportPlan1 {
 
 	public static int MAXM = 300001;
 
-	public static int[] cnt = new int[MAXN];
+	public static int n;
 
+	public static int m;
+
+	// num[i] : i节点和其父节点的边，有多少代价>=limit的运输计划用到
+	public static int[] num = new int[MAXN];
+
+	// 链式前向星建图需要
 	public static int[] headEdge = new int[MAXN];
 
 	public static int[] edgeNext = new int[MAXN << 1];
@@ -38,6 +44,7 @@ public class Code05_TransportPlan1 {
 
 	public static int tcnt;
 
+	// tarjan算法需要
 	public static int[] headQuery = new int[MAXN];
 
 	public static int[] queryNext = new int[MAXM << 1];
@@ -56,15 +63,19 @@ public class Code05_TransportPlan1 {
 
 	public static int[] quesv = new int[MAXM];
 
-	public static int[] lca = new int[MAXM];
-
-	public static int[] cost = new int[MAXM];
-
+	// distance[i] : 头节点到i号点的距离，tarjan算法过程中更新
 	public static int[] distance = new int[MAXN];
 
-	public static int maxcost;
+	// lca[i] : 第i号运输计划的两端点lca，tarjan算法过程中更新
+	public static int[] lca = new int[MAXM];
 
-	public static void build(int n) {
+	// cost[i] : 第i号运输计划代价是多少，tarjan算法过程中更新
+	public static int[] cost = new int[MAXM];
+
+	// 所有运输计划的最大代价，tarjan算法过程中更新
+	public static int maxCost;
+
+	public static void build() {
 		tcnt = qcnt = 1;
 		Arrays.fill(headEdge, 1, n + 1, 0);
 		Arrays.fill(headQuery, 1, n + 1, 0);
@@ -72,7 +83,7 @@ public class Code05_TransportPlan1 {
 		for (int i = 1; i <= n; i++) {
 			unionfind[i] = i;
 		}
-		maxcost = 0;
+		maxCost = 0;
 	}
 
 	public static void addEdge(int u, int v, int w) {
@@ -111,28 +122,35 @@ public class Code05_TransportPlan1 {
 				i = queryIndex[e];
 				lca[i] = find(v);
 				cost[i] = distance[u] + distance[v] - 2 * distance[lca[i]];
-				maxcost = Math.max(maxcost, cost[i]);
+				maxCost = Math.max(maxCost, cost[i]);
 			}
 		}
 		unionfind[u] = f;
 	}
 
-	public static boolean check(int n, int m, int limit) {
-		Arrays.fill(cnt, 1, n + 1, 0);
+	// 只能把一条边的权值变成0
+	// 还要求每个运输计划的代价都要<=limit
+	// 返回能不能做到
+	public static boolean f(int limit) {
+		atLeast = maxCost - limit;
+		Arrays.fill(num, 1, n + 1, 0);
 		beyond = 0;
 		for (int i = 1; i <= m; i++) {
 			if (cost[i] > limit) {
-				cnt[quesu[i]]++;
-				cnt[quesv[i]]++;
-				cnt[lca[i]] -= 2;
+				num[quesu[i]]++;
+				num[quesv[i]]++;
+				num[lca[i]] -= 2;
 				beyond++;
 			}
 		}
-		atLeast = maxcost - limit;
 		return beyond == 0 || dfs(1, 0, 0);
 	}
 
-	public static int beyond, atLeast;
+	// 至少要减少多少边权
+	public static int atLeast;
+
+	// 超过要求的运输计划有几个
+	public static int beyond;
 
 	public static boolean dfs(int u, int f, int w) {
 		for (int e = headEdge[u], v; e != 0; e = edgeNext[e]) {
@@ -146,10 +164,10 @@ public class Code05_TransportPlan1 {
 		for (int e = headEdge[u], v; e != 0; e = edgeNext[e]) {
 			v = edgeTo[e];
 			if (v != f) {
-				cnt[u] += cnt[v];
+				num[u] += num[v];
 			}
 		}
-		return cnt[u] >= beyond && w >= atLeast;
+		return num[u] == beyond && w >= atLeast;
 	}
 
 	public static void main(String[] args) throws IOException {
@@ -157,10 +175,10 @@ public class Code05_TransportPlan1 {
 		StreamTokenizer in = new StreamTokenizer(br);
 		PrintWriter out = new PrintWriter(new OutputStreamWriter(System.out));
 		in.nextToken();
-		int n = (int) in.nval;
-		build(n);
+		n = (int) in.nval;
+		build();
 		in.nextToken();
-		int m = (int) in.nval;
+		m = (int) in.nval;
 		for (int i = 1, u, v, w; i < n; i++) {
 			in.nextToken();
 			u = (int) in.nval;
@@ -181,23 +199,24 @@ public class Code05_TransportPlan1 {
 			addQuery(u, v, i);
 			addQuery(v, u, i);
 		}
-		out.println(compute(n, m));
+		out.println(compute());
 		out.flush();
 		out.close();
 		br.close();
 	}
 
-	public static int compute(int n, int m) {
+	public static int compute() {
 		tarjan(1, 0, 0);
-		int l = 0, r = maxcost, mid;
+		int l = 0, r = maxCost, mid;
 		int ans = 0;
 		while (l <= r) {
 			mid = (l + r) / 2;
-			if (check(n, m, mid)) {
+			if (f(mid)) {
 				ans = mid;
 				r = mid - 1;
-			} else
+			} else {
 				l = mid + 1;
+			}
 		}
 		return ans;
 	}
