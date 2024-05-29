@@ -80,6 +80,9 @@ public class CircularDeque {
 		public boolean isEmpty() {
 			return size == 0;
 		}
+		public int getSize(){
+			return deque.size();
+		}
 
 		public boolean isFull() {
 			return size == limit;
