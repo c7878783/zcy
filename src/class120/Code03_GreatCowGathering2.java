@@ -2,7 +2,7 @@ package class120;
 
 // 牛群聚集(迭代版)
 // 一共有n个节点，编号1~n，每个点有牛的数量
-// 一共有n-1条边把所有点联通起来形成一棵树，每条边有权值
+// 一共有n-1条边把所有点连通起来形成一棵树，每条边有权值
 // 想把所有的牛汇聚在一点，希望走过的总距离最小
 // 返回总距离最小是多少
 // 利用重心的性质：
@@ -58,7 +58,7 @@ public class Code03_GreatCowGathering2 {
 		head[u] = cnt++;
 	}
 
-	// nfe是为了实现迭代版而准备的栈
+	// ufe是为了实现迭代版而准备的栈
 	public static int[][] ufe = new int[MAXN][3];
 
 	public static int stackSize, u, f, e;

@@ -1,6 +1,8 @@
 package class123;
 
-// 所有节点深度之和最大(递归版)
+// 最大深度和(递归版)
+// 给定一棵n个点的树，找到一个节点，使得以这个节点为根时，到达所有节点的深度之和最大
+// 如果有多个节点满足要求，返回节点编号最小的
 // 测试链接 : https://www.luogu.com.cn/problem/P3478
 // 提交以下的code，提交时请把类名改成"Main"
 // C++这么写能通过，java会因为递归层数太多而爆栈
@@ -30,14 +32,13 @@ public class Code01_MaximizeSumOfDeeps1 {
 
 	public static int[] size = new int[MAXN];
 
-	public static int[] deep = new int[MAXN];
-
 	public static long[] sum = new long[MAXN];
+
+	public static long[] dp = new long[MAXN];
 
 	public static void build() {
 		cnt = 1;
 		Arrays.fill(head, 1, n + 1, 0);
-		sum[0] = 0;
 	}
 
 	public static void addEdge(int u, int v) {
@@ -54,21 +55,21 @@ public class Code01_MaximizeSumOfDeeps1 {
 			}
 		}
 		size[u] = 1;
-		deep[u] = deep[f] + 1;
+		sum[u] = 0;
 		for (int e = head[u], v; e != 0; e = next[e]) {
 			v = to[e];
 			if (v != f) {
 				size[u] += size[v];
+				sum[u] += sum[v] + size[v];
 			}
 		}
 	}
 
 	public static void dfs2(int u, int f) {
-		// 这一句是换根最核心的逻辑
-		sum[u] = sum[f] - size[u] + (n - size[u]);
 		for (int e = head[u], v; e != 0; e = next[e]) {
 			v = to[e];
 			if (v != f) {
+				dp[v] = dp[u] - size[v] + n - size[v];
 				dfs2(v, u);
 			}
 		}
@@ -90,15 +91,13 @@ public class Code01_MaximizeSumOfDeeps1 {
 			addEdge(v, u);
 		}
 		dfs1(1, 0);
-		for (int i = 1; i <= n; i++) {
-			sum[0] += deep[i] + 1;
-		}
+		dp[1] = sum[1];
 		dfs2(1, 0);
-		long max = sum[1];
-		int ans = 1;
-		for (int i = 2; i <= n; i++) {
-			if (sum[i] > max) {
-				max = sum[i];
+		long max = Long.MIN_VALUE;
+		int ans = 0;
+		for (int i = 1; i <= n; i++) {
+			if (dp[i] > max) {
+				max = dp[i];
 				ans = i;
 			}
 		}
