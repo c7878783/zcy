@@ -5,6 +5,10 @@ package class023;
 
 public class Code02_QuickSort {
 
+
+	public static void main(String[] args) {
+
+	}
 	public static int[] sortArray(int[] nums) {
 		if (nums.length > 1) {
 			quickSort2(nums, 0, nums.length - 1);
