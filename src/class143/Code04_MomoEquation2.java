@@ -1,13 +1,14 @@
 package class143;
 
 // 墨墨的等式(两次转圈法)
-// 一共有n种物品，第i种物品价值是v[i]，每种物品可以选择任意个，个数不能是负数
-// 那么各种物品组合在一起可以形成很多价值累加和
-// 请问在[l...r]范围上，其中有多少个数是能被组成的价值累加和
+// 一共有n种正数，每种数可以选择任意个，个数不能是负数
+// 那么一定有某些数值可以由这些数字累加得到
+// 请问在[l...r]范围上，有多少个数能被累加得到
 // 0 <= n <= 12
-// 0 <= v[i] <= 5 * 10^5
+// 0 <= 数值范围 <= 5 * 10^5
 // 1 <= l <= r <= 10^12
 // 测试链接 : https://www.luogu.com.cn/problem/P2371
+// 提交以下的code，提交时请把类名改成"Main"，可以通过所有测试用例
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -25,7 +26,7 @@ public class Code04_MomoEquation2 {
 
 	public static int[] v = new int[MAXN];
 
-	public static long[] dp = new long[MAXN];
+	public static long[] dist = new long[MAXN];
 
 	public static int n, x;
 
@@ -47,15 +48,15 @@ public class Code04_MomoEquation2 {
 			return 0;
 		}
 		x = v[1];
-		Arrays.fill(dp, 0, x, inf);
-		dp[0] = 0;
-		for (int i = 2, d; i <= size; i++) {
-			d = gcd(v[i], x);
-			for (int j = 0; j < d; j++) {
+		Arrays.fill(dist, 0, x, inf);
+		dist[0] = 0;
+		for (int i = 2, d; i <= size; i++) { // 出现基准数之外的其他数，更新最短路
+			d = gcd(v[i], x); // 求最大公约数
+			for (int j = 0; j < d; j++) { // j是每个子环的起点
 				for (int cur = j, next, circle = 0; circle < 2; circle += cur == j ? 1 : 0) {
 					next = (cur + v[i]) % x;
-					if (dp[cur] != inf) {
-						dp[next] = Math.min(dp[next], dp[cur] + v[i]);
+					if (dist[cur] != inf) {
+						dist[next] = Math.min(dist[next], dist[cur] + v[i]);
 					}
 					cur = next;
 				}
@@ -63,11 +64,11 @@ public class Code04_MomoEquation2 {
 		}
 		long ans = 0;
 		for (int i = 0; i < x; i++) {
-			if (r >= dp[i]) {
-				ans += Math.max(0, (r - dp[i]) / x + 1);
+			if (r >= dist[i]) {
+				ans += Math.max(0, (r - dist[i]) / x + 1);
 			}
-			if (l >= dp[i]) {
-				ans -= Math.max(0, (l - dp[i]) / x + 1);
+			if (l >= dist[i]) {
+				ans -= Math.max(0, (l - dist[i]) / x + 1);
 			}
 		}
 		return ans;
