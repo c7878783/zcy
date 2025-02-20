@@ -77,7 +77,7 @@ public class Code02_DesignBitsetTest {
 			int tmp = zeros;
 			zeros = ones;
 			ones = tmp;
-		}
+		}//如果先按照未反转执行了操作，再调用反转，会导致位图理解错误
 
 		public boolean all() {
 			return ones == size;
