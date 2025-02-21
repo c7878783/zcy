@@ -76,7 +76,7 @@ public class BitOperationAddMinusMultiplyDivide {
 			a <<= 1;
 			b >>>= 1;
 		}
-		return ans;
+		return ans;//要是溢出了，怪输入的那个人没想明白，他应该保证不能溢出的两个数。
 	}
 
 }
