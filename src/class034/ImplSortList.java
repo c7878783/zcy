@@ -21,7 +21,7 @@ public class ImplSortList {
             l1 = head;
             r1 = findEnd(l1, step);
             l2 = r1.next;
-            r2 = findEnd(l1, step);
+            r2 = findEnd(l2, step);
             next = r2.next;
             r1.next = null;
             r2.next = null;
@@ -32,6 +32,10 @@ public class ImplSortList {
                 l1 = next;
                 r1 = findEnd(l1, step);
                 l2 = r1.next;
+                if (l2 == null) {
+                    lastTeamEnd.next = l1;
+                    break;
+                }
                 r2 = findEnd(l2, step);
                 next = r2.next;
                 r1.next = null;
@@ -66,7 +70,7 @@ public class ImplSortList {
             pre = l2;
             l2 = l2.next;
         }
-        while (l1.next != null && l2.next != null){
+        while (l1 != null && l2 != null){
             if (l1.val <= l2.val){
                 pre.next = l1;
                 pre = l1;
@@ -77,7 +81,7 @@ public class ImplSortList {
                 l2 = l2. next;
             }
         }
-        if (l1.next != null){
+        if (l1 != null){
             pre.next = l1;
             end = r1;
         }else {

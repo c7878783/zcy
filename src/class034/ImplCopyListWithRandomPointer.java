@@ -13,7 +13,7 @@ public class ImplCopyListWithRandomPointer {
 
     public static Node copyRandomList(Node head) {
         if (head == null){
-            return head;
+            return null;
         }
 
         Node cur = head;
@@ -26,7 +26,7 @@ public class ImplCopyListWithRandomPointer {
         }
         cur = head;
         Node copy = null;
-        while (cur != next){
+        while (cur != null){
             next = cur.next.next;
             copy = cur.next;
             copy.random = cur.random != null? cur.random.next : null;
