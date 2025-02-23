@@ -41,7 +41,7 @@ public class Code07_PreorderInorderBuildBinaryTree {
 		// pre : l1(........)[.......r1]
 		// in  : (l2......)k[........r2]
 		// (...)是左树对应，[...]是右树的对应
-		head.left = f(pre, l1 + 1, l1 + k - l2, in, l2, k - 1, map);
+		head.left = f(pre, l1 + 1, l1 + k - l2, in, l2, k - 1, map);//k - l2是下个区间的长度,中序的左区间依旧是l2
 		head.right = f(pre, l1 + k - l2 + 1, r1, in, k + 1, r2, map);
 		return head;
 	}

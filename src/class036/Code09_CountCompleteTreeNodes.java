@@ -29,9 +29,10 @@ public class Code09_CountCompleteTreeNodes {
 		}
 		if (mostLeft(cur.right, level + 1) == h) {
 			// cur右树上的最左节点，扎到了最深层
-			return (1 << (h - level)) + f(cur.right, level + 1, h);
+			return (1 << (h - level)) + f(cur.right, level + 1, h);//这一步移位相加是左边，左边是完全二叉树
 		} else {
 			// cur右树上的最左节点，没扎到最深层
+			//满二叉树节点数量公式2^l - 1，l是层数,这一步是加上右边，右边是完全二叉树，因为没到底部，说明必须要右边是完全二叉树，左边才能继续向下
 			return (1 << (h - level - 1)) + f(cur.left, level + 1, h);
 		}
 	}
