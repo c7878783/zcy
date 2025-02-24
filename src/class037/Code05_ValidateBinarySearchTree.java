@@ -19,7 +19,7 @@ public class Code05_ValidateBinarySearchTree {
 	public static int r;
 
 	// 提交时改名为isValidBST
-	public static boolean isValidBST1(TreeNode head) {
+	public static boolean isValidBST1(TreeNode head) {//中序遍历栈方法，要求每次从栈中pop的值要大于上一个
 		if (head == null) {
 			return true;
 		}
@@ -44,7 +44,7 @@ public class Code05_ValidateBinarySearchTree {
 	public static long min, max;
 
 	// 提交时改名为isValidBST
-	public static boolean isValidBST2(TreeNode head) {
+	public static boolean isValidBST2(TreeNode head) {//左右递归法
 		if (head == null) {
 			min = Long.MAX_VALUE;
 			max = Long.MIN_VALUE;

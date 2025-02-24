@@ -33,12 +33,12 @@ public class Code07_HouseRobberIII {
 			int y = root.val;
 			int n = 0;
 			f(root.left);
-			y += no;
-			n += Math.max(yes, no);
+			y += no;//y是当前节点自身的数值，这一句就是我偷了当前的节点
+			n += Math.max(yes, no);//这里没有加Y而是进一步向下去偷
 			f(root.right);
 			y += no;
 			n += Math.max(yes, no);
-			yes = y;
+			yes = y;//这是为了告诉上面，你取我这个节点的值能拿到多少，no变量则是，你不取我能拿到多少。
 			no = n;
 		}
 	}
