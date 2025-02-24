@@ -32,5 +32,36 @@ public class c5ImplValidateBinarySearchTree {
             max = Math.max(Math.max(lmax, rmax), root.val);
             return lok && rok && lmax < root.val && root.val < rmin;
         }
+
+
+
+        public static int MAXN = 10001;
+        public static TreeNode[] stack = new TreeNode[MAXN];
+        public int r;
+
+        public static boolean isValidBST2(TreeNode root) {
+            if (root == null){
+                return true;
+            }
+            TreeNode pre = null;
+            int r = 0;
+            while (r > 0 || root != null){
+                if (root != null){
+                    stack[r++] = root;
+                    root = root.left;
+                }else {
+                    root = stack[--r];
+                    if (pre != null && pre.val >= root.val){
+                        return false;
+                    }
+                    pre = root;
+                    root = root.right;
+                }
+            }
+
+            return true;
+        }
+
+
     }
 }

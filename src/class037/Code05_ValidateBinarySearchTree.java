@@ -27,16 +27,16 @@ public class Code05_ValidateBinarySearchTree {
 		r = 0;
 		while (r > 0 || head != null) {
 			if (head != null) {
-				stack[r++] = head;
+				stack[r++] = head;//中序遍历，先朝着左边把所有的节点搜集到最后一个，然后在叶子节点弹出
 				head = head.left;
 			} else {
 				head = stack[--r];
-				if (pre != null && pre.val >= head.val) {
-					return false;
+				if (pre != null && pre.val >= head.val) {//可以先不看这个，这个就是代替了中序的显示
+					return false;//回来再看这句就是在说，当中序有弹出的时候，pre不是null，同时需要保证递增
 				}
-				pre = head;
-				head = head.right;
-			}
+				pre = head;//pre这个是用来存住一个结点的左节点，这个左节点是作为中序节点弹出的，只要保证中序节点弹出依次递增就可以保证二叉搜索树
+				head = head.right;//在最左叶子节点为heda的时候，这个.right也是空的，然而这是由于head空，我们需要再取从stack中取值，取出来的就是最左叶子的根了
+			}//至于右边的处理问题，把右边单独的想象成独立地子树就很好理解了
 		}
 		return true;
 	}
