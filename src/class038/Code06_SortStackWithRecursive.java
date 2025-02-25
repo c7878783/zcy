@@ -70,7 +70,7 @@ public class Code06_SortStackWithRecursive {
 		} else {
 			int num = stack.pop();
 			down(stack, deep - 1, max, k);
-			if (num != max) {
+			if (num != max) {//num不是最大值，就push回去，是最大值，不用处理，因为它已经被放置在里面了，由于已经放置了k个max，所以会发生剩余n - k个非最大值安置在栈上方
 				stack.push(num);
 			}
 		}

@@ -21,10 +21,10 @@ public class Code03_Permutations {
 			}
 			ans.add(cur);
 		} else {
-			for (int j = i; j < nums.length; j++) {
+			for (int j = i; j < nums.length; j++) {//当前数字一个个和下面的换
 				swap(nums, i, j);
-				f(nums, i + 1, ans);
-				swap(nums, i, j); // 特别重要，课上进行了详细的图解
+				f(nums, i + 1, ans);//从当前位置数字的下一个开始
+				swap(nums, i, j); // 特别重要，课上进行了详细的图解,你不换回来咋咋能是穷举一个个可能
 			}
 		}
 	}

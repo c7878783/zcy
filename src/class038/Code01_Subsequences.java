@@ -49,9 +49,9 @@ public class Code01_Subsequences {
 		if (i == s.length) {
 			set.add(String.valueOf(path, 0, size));
 		} else {
-			path[size] = s[i];
-			f2(s, i + 1, path, size + 1, set);
-			f2(s, i + 1, path, size, set);
+			path[size] = s[i];//在收集数组的size位置放置上i的值以此选择
+			f2(s, i + 1, path, size + 1, set);//size + 1，表示留下这个数，然后看下一个
+			f2(s, i + 1, path, size, set);//不+1表示这个数虽然放上去了，但是等下会被顶替掉
 		}
 	}
 

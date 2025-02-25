@@ -20,7 +20,7 @@ public class Code02_Combinations {
 	}
 
 	public static void f(int[] nums, int i, int[] path, int size, List<List<Integer>> ans) {
-		if (i == nums.length) {
+		if (i == nums.length) {//这句的意思是都遍历完了
 			ArrayList<Integer> cur = new ArrayList<>();
 			for (int j = 0; j < size; j++) {
 				cur.add(path[j]);
@@ -28,9 +28,9 @@ public class Code02_Combinations {
 			ans.add(cur);
 		} else {
 			// 下一组的第一个数的位置
-			int j = i + 1;
+			int j = i + 1;//这个数的下一个开始去找
 			while (j < nums.length && nums[i] == nums[j]) {
-				j++;
+				j++;//先把同样的数够了
 			}
 			// 当前数x，要0个
 			f(nums, j, path, size, ans);

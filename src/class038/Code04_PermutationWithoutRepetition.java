@@ -22,7 +22,7 @@ public class Code04_PermutationWithoutRepetition {
 			}
 			ans.add(cur);
 		} else {
-			HashSet<Integer> set = new HashSet<>();
+			HashSet<Integer> set = new HashSet<>();//当前的f是以当前的i为基准建立的，当前的set也是，所以当前的i位置处，后续判断后面的数有没有来过当前的i位置
 			for (int j = i; j < nums.length; j++) {
 				// nums[j]没有来到过i位置，才会去尝试
 				if (!set.contains(nums[j])) {
