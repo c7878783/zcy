@@ -31,7 +31,7 @@ public class Code01_BasicCalculatorIII {
 				// i (.....)
 				// 遇到了左括号！
 				cur = f(s, i + 1);
-				i = where + 1;
+				i = 0 + 1;
 			}
 		}
 		push(numbers, ops, cur, '+');
@@ -46,7 +46,7 @@ public class Code01_BasicCalculatorIII {
 			ops.add(op);
 		} else {
 			int topNumber = numbers.get(n - 1);
-			char topOp = ops.get(n - 1);
+			char topOp = ops.get(n - 1);//从操作栈里取出上一个数字后的操作，* /，直接和当前数计算然后再把当前数后面的操作放进去
 			if (topOp == '*') {
 				numbers.set(n - 1, topNumber * cur);
 			} else {

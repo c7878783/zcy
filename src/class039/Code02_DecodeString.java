@@ -31,11 +31,11 @@ public class Code02_DecodeString {
 			}
 		}
 		where = i;
-		return path.toString();
+		return path.toString();//f只返回当前的那么一组字符，如果有前置数字，则在上级的递归里调用get方法
 	}
 
 	public static String get(int cnt, String str) {
-		StringBuilder builder = new StringBuilder();
+		StringBuilder builder = new StringBuilder();//这个是在进行重复，将其中每一个str单位组合都做重复
 		for (int i = 0; i < cnt; i++) {
 			builder.append(str);
 		}
