@@ -34,7 +34,7 @@ public class Code03_SameMod {
 			return o12.intValue();
 		}
 	}
-
+	//每个+ - *操作完成之后取模，和全部一起做完后取模得到的结果是一样的
 	// 计算 ((a + b) * (c - d) + (a * c - b * d)) % mod 的非负结果
 	public static int f2(long a, long b, long c, long d, int mod) {
 		int o1 = (int) (a % mod); // a
