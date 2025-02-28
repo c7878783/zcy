@@ -18,13 +18,14 @@ public class Code01_AppleMinBags {
 		if (rest == 0) {
 			return 0;
 		}
+		//走到这里说明袋子数量装了苹果还有剩余
 		// 使用8规格的袋子，剩余的苹果还需要几个袋子，有可能返回无效解
 		int p1 = f(rest - 8);
 		// 使用6规格的袋子，剩余的苹果还需要几个袋子，有可能返回无效解
 		int p2 = f(rest - 6);
-		p1 += p1 != Integer.MAX_VALUE ? 1 : 0;
+		p1 += p1 != Integer.MAX_VALUE ? 1 : 0;//当
 		p2 += p2 != Integer.MAX_VALUE ? 1 : 0;
-		return Math.min(p1, p2);
+		return Math.min(p1, p2);//如果路径p1和p2都是无效解，那就是在他们原本的整数最大值基础上再加0；如果有效就是0（或者下面的袋子数量） + 1
 	}
 
 	public static int bags2(int apple) {

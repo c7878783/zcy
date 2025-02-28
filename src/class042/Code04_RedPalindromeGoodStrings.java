@@ -17,7 +17,7 @@ public class Code04_RedPalindromeGoodStrings {
 		return f(path, 0);
 	}
 
-	public static int f(char[] path, int i) {
+	public static int f(char[] path, int i) {//在最开始，先走else进行随机填三个值中的一个，填到最后了，在走if-true条件进行回文判断
 		if (i == path.length) {
 			int cnt = 0;
 			for (int l = 0; l < path.length; l++) {
