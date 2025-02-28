@@ -50,8 +50,8 @@ public class Code02_SuperPalindromes {
 	public static long evenEnlarge(long seed) {
 		long ans = seed;
 		while (seed != 0) {
-			ans = ans * 10 + seed % 10;
-			seed /= 10;
+			ans = ans * 10 + seed % 10;//已有的位数向前移动，然后把最后的一位用%取出来加上去
+			seed /= 10;//加上的那一位可以从seed中去掉了
 		}
 		return ans;
 	}
@@ -83,10 +83,10 @@ public class Code02_SuperPalindromes {
 		// offset : 10000
 		// 首尾判断
 		while (num != 0) {
-			if (num / offset != num % 10) {
+			if (num / offset != num % 10) {//这一步左边条件是提取出最左侧数字，右边是提取出最右侧数字
 				return false;
 			}
-			num = (num % offset) / 10;
+			num = (num % offset) / 10;//抹掉前后的数值
 			offset /= 100;
 		}
 		return true;

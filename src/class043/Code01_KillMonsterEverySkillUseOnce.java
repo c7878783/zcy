@@ -58,7 +58,7 @@ public class Code01_KillMonsterEverySkillUseOnce {
 
 	// kill[i]、blood[i]
 	// n : 一共几个技能
-	// i : 当前来到了第几号技能
+	// i : 当前来到了第几号技能(不一定和原始的技能排序相同，因为上层递归调用的swao可能导致技能顺序改变)
 	// r : 怪兽目前的剩余血量
 	public static int f(int n, int i, int r) {
 		if (r <= 0) {
@@ -72,7 +72,7 @@ public class Code01_KillMonsterEverySkillUseOnce {
 		}
 		// 返回至少需要几个技能可以将怪兽杀死
 		int ans = Integer.MAX_VALUE;
-		for (int j = i; j < n; j++) {
+		for (int j = i; j < n; j++) {//和038code03异曲同工,我先放i技能的前提下，再放其他的技能的尝试
 			swap(i, j);
 			ans = Math.min(ans, f(n, i + 1, r - (r > blood[i] ? kill[i] : kill[i] * 2)));
 			swap(i, j);
