@@ -17,7 +17,7 @@ public class Code03_WordSearchII {
 
 	public static List<String> findWords(char[][] board, String[] words) {
 		build(words);
-		List<String> ans = new ArrayList<>();
+		List<String> ans = new ArrayList<>();//注意单个单词不要重复，多个单词用同一个表字符没关系
 		for (int i = 0; i < board.length; i++) {
 			for (int j = 0; j < board[0].length; j++) {
 				dfs(board, i, j, 1, ans);
@@ -54,14 +54,14 @@ public class Code03_WordSearchII {
 		// i，j位置有必要来
 		// fix ：从当前i，j位置出发，一共收集到了几个字符串
 		int fix = 0;
-		if (end[t] != null) {
+		if (end[t] != null) {//搜到一个（这个）单词了
 			fix++;
 			ans.add(end[t]);
 			end[t] = null;
 		}
 		// 把i，j位置的字符，改成0，后续的过程，是不可以再来到i，j位置的！
 		board[i][j] = 0;//这个字符我取走了，后续不要绕回来
-		fix += dfs(board, i - 1, j, t, ans);
+		fix += dfs(board, i - 1, j, t, ans);//向其他四个方向搜索
 		fix += dfs(board, i + 1, j, t, ans);
 		fix += dfs(board, i, j - 1, t, ans);
 		fix += dfs(board, i, j + 1, t, ans);

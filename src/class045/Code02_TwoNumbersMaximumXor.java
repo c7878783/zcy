@@ -42,7 +42,7 @@ public class Code02_TwoNumbersMaximumXor {
 		}
 		// 计算数组最大值的二进制状态，有多少个前缀的0
 		// 可以忽略这些前置的0，从left位开始考虑
-		high = 31 - Integer.numberOfLeadingZeros(max);
+		high = 31 - Integer.numberOfLeadingZeros(max);//这行代码求得的 high 是 max 的二进制表示中，最高位 1 的位置索引（0-based）。
 		for (int num : nums) {
 			insert(num);
 		}
@@ -97,15 +97,15 @@ public class Code02_TwoNumbersMaximumXor {
 		HashSet<Integer> set = new HashSet<>();
 		for (int i = 31 - Integer.numberOfLeadingZeros(max); i >= 0; i--) {
 			// ans : 31....i+1 已经达成的目标
-			int better = ans | (1 << i);
+			int better = ans | (1 << i);//better是原本的ans再多加一个
 			set.clear();
 			for (int num : nums) {
 				// num : 31.....i 这些状态保留，剩下全成0
 				num = (num >> i) << i;
 				set.add(num);
 				// num ^ 某状态 是否能 达成better目标，就在set中找 某状态 : better ^ num
-				if (set.contains(better ^ num)) {
-					ans = better;
+				if (set.contains(better ^ num)) {//这是基于a ^ b = c，a ^ c = b, a ^ c = b这个特性，如果better异或一个set中的值还在set中，就说明有两个数可以满足更好(大)的ans
+					ans = better;//说明
 					break;
 				}
 			}
