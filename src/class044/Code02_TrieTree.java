@@ -77,7 +77,7 @@ public class Code02_TrieTree {
 			for (int i = 0, path; i < word.length(); i++) {
 				path = word.charAt(i) - 'a';
 				if (--pass[tree[cur][path]] == 0) {
-					tree[cur][path] = 0;
+					tree[cur][path] = 0;//给这个节点抹掉，这个节点后续连着的内容同样也不再重要了，等于断开连接
 					return;
 				}
 				cur = tree[cur][path];
