@@ -27,7 +27,7 @@ public class Code02_TwoNumbersMaximumXor {
 
 	public static int[][] tree = new int[MAXN][2];
 
-	// 前缀树目前使用了多少空间
+	// 前缀树目前使用了多少空间（节点号）
 	public static int cnt;
 
 	// 数字只需要从哪一位开始考虑
@@ -75,7 +75,7 @@ public class Code02_TwoNumbersMaximumXor {
 			}
 			// want变成真的往下走的路
 			ans |= (status ^ want) << i;
-			cur = tree[cur][want];
+			cur = tree[cur][want];//最好的情况不通，就会去走相同的，但是如果相同的也没有，那后续读取的点就是数组中的0位置，也就是我们没有初始化的位置
 		}
 		return ans;
 	}
