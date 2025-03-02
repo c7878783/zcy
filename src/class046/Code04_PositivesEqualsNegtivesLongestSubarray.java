@@ -50,7 +50,7 @@ public class Code04_PositivesEqualsNegtivesLongestSubarray {
 		for (int i = 0, sum = 0; i < n; i++) {
 			sum += arr[i];
 			if (map.containsKey(sum)) {
-				ans = Math.max(ans, i - map.get(sum));
+				ans = Math.max(ans, i - map.get(sum));//当前的sum-和当前sum数值相同的最早索引
 			} else {
 				map.put(sum, i);
 			}

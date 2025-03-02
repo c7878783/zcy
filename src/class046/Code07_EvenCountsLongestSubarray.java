@@ -14,9 +14,9 @@ public class Code07_EvenCountsLongestSubarray {
 		// 只有5个元音字符，状态就5位
 		int[] map = new int[32];
 		// map[0...31] = -2
-		// map[01100] = -2, 这个状态之前没出现过
+		// map[01100] = -2, 这个状态之前没出现过，此时的01100表示map【12】
 		Arrays.fill(map, -2);
-		map[0] = -1;
+		map[0] = -1;//五个00000，出现在-1也就是一个字符也没算进来的时候
 		int ans = 0;
 		for (int i = 0, status = 0, m; i < n; i++) {
 			// status : 0....i-1字符串上，aeiou的奇偶性
@@ -25,11 +25,11 @@ public class Code07_EvenCountsLongestSubarray {
 			// 情况2 : 当前字符是元音，a~u(0~4)，修改相应的状态
 			m = move(s.charAt(i));
 			if (m != -1) {
-				status ^= 1 << m;
+				status ^= 1 << m;//去寻找这个状态status
 			}
 			// status:  0....i字符串上，aeiou的奇偶性
 			// 同样的状态，之前最早出现在哪
-			if (map[status] != -2) {
+			if (map[status] != -2) {//某个元音是奇的，再去掉一组相同的奇就好了
 				ans = Math.max(ans, i - map[status]);
 			} else {
 				map[status] = i;

@@ -51,7 +51,7 @@ public class Code02_LongestSubarraySumEqualsAim {
 	public static int compute() {
 		map.clear();
 		// 重要 : 0这个前缀和，一个数字也没有的时候，就存在了
-		map.put(0, -1);
+		map.put(0, -1);//向前先取一位做只加一个数时的结果，指到0，加1个，1两个（0， 1），2三个（0，1，2）
 		int ans = 0;
 		for (int i = 0, sum = 0; i < n; i++) {
 			sum += arr[i];

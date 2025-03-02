@@ -27,6 +27,9 @@ public class Code06_MakeSumDivisibleByP {
 		for (int i = 0, cur = 0, find; i < nums.length; i++) {
 			// 0...i这部分的余数
 			cur = (cur + nums[i]) % p;
+			//当前组的余数大于总余数，找一个小余数去掉，
+			// 小于总余数，就找个和它互补的，比如余2，p是7，mod是4，那就找个5去了，关键在于去掉前面的部分后，现在组的余数应该是4，然后我们把他删掉
+			// 也就是去掉余数为4的部分
 			find = cur >= mod ? (cur - mod) : (cur + p - mod);
 			// find = (cur + p - mod) % p;
 			if (map.containsKey(find)) {
