@@ -54,11 +54,11 @@ public class Code02_ArithmeticSequenceDifference {
 	public static void set(int l, int r, int s, int e, int d) {
 		arr[l] += s;
 		arr[l + 1] += d - s;
-		arr[r + 1] -= d + e;
-		arr[r + 2] += e;
+		arr[r + 1] -= d + e;//要把d去了留下一个-e，使得这位加成0
+		arr[r + 2] += e;//要把-e抹除
 	}
 
-	public static void build() {
+	public static void build() {//做两次前缀和
 		for (int i = 1; i <= n; i++) {
 			arr[i] += arr[i - 1];
 		}

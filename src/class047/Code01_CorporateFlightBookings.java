@@ -15,15 +15,15 @@ public class Code01_CorporateFlightBookings {
 	// [2,9,3]
 	// ...
 	public static int[] corpFlightBookings(int[][] bookings, int n) {
-		int[] cnt = new int[n + 2];
+		int[] cnt = new int[n + 2];//左右各多出来一个位置
 		// 设置差分数组，每一个操作对应两个设置
 		for (int[] book : bookings) {
-			cnt[book[0]] += book[2];
-			cnt[book[1] + 1] -= book[2];
+			cnt[book[0]] += book[2];//最先的位置（1）需要知道他之前的前缀和是0，所以左边多一节（0~6，0和6是多出来的，1~5是答案）
+			cnt[book[1] + 1] -= book[2];//右边多出来就是为了保证这一步不需要特殊谈论
 		}
 		// 加工前缀和
 		for (int i = 1; i < cnt.length; i++) {
-			cnt[i] += cnt[i - 1];
+			cnt[i] += cnt[i - 1];//这里复用了数组
 		}
 		int[] ans = new int[n];
 		for (int i = 0; i < n; i++) {
