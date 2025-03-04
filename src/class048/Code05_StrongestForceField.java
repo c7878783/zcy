@@ -61,6 +61,7 @@ public class Code05_StrongestForceField {
 	// [30,50,60,70] 60 -> 3
 	//  1  2  3  4
 	// 长度4，
+	// 将网格的大小变得和力场个数有关，而不是和实际数值有关
  	public static int sort(long[] nums) {
 		Arrays.sort(nums);
 		int size = 1;

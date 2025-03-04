@@ -61,8 +61,8 @@ public class Code03_DiffMatrixNowcoder {
 					in.nextToken();
 					add(i, j, i, j, (int) in.nval);
 				}
-			}
-			for (int i = 1, a, b, c, d, k; i <= q; i++) {
+			}//第一个for循环是在存储数值，比如2行3列的数值原本是5，那就将2行三列到2行三列+5，这样就相当于对全0矩阵加入了差分值让他能得到初态
+			for (int i = 1, a, b, c, d, k; i <= q; i++) {//后面这个for循环就是真正的差分修改数值
 				in.nextToken();
 				a = (int) in.nval;
 				in.nextToken();
@@ -75,7 +75,7 @@ public class Code03_DiffMatrixNowcoder {
 				k = (int) in.nval;
 				add(a, b, c, d, k);
 			}
-			build();
+			build();//初态和差分处理都处理好了再build
 			for (int i = 1; i <= n; i++) {
 				out.print(diff[i][1]);
 				for (int j = 2; j <= m; j++) {

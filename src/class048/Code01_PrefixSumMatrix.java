@@ -23,7 +23,7 @@ public class Code01_PrefixSumMatrix {
 				}
 			}
 		}
-
+		//首先原始图的a,b,c,d对应的应该是sum图的每个地方+1，但是由于在计算公式中a,b 两处需要+1再-1，所以直接用原始数值
 		public int sumRegion(int a, int b, int c, int d) {
 			c++;
 			d++;

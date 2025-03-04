@@ -23,7 +23,7 @@ public class Code04_StampingTheGrid {
 			for (int j = 0; j < m; j++) {
 				sum[i + 1][j + 1] = grid[i][j];
 			}
-		}
+		}//普通构建只需要开辟出左和上的额外空间，差分构建由于涉及最后一行一列的下一行列摆k的问题，所以开两组
 		build(sum);
 		// 差分矩阵
 		// 当贴邮票的时候，不再原始矩阵里贴，在差分矩阵里贴
