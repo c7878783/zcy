@@ -15,6 +15,8 @@ public class Code07_LongestSubstringWithAtLeastKRepeating {
 		int[] cnts = new int[256];
 		int ans = 0;
 		// 每次要求子串必须含有require种字符，每种字符都必须>=k次，这样的最长子串是多长
+		// 换句话说，你包含的每一个字符不能少于k次，不然就不允许包含他
+		// 这里把问题拆解了，因为我们本身不知道需要含有几种字符，所以26种字符数量各个判断，一个个试看最多能试出来多少种字符
 		for (int require = 1; require <= 26; require++) {
 			Arrays.fill(cnts, 0);
 			// collect : 窗口中一共收集到的种类数

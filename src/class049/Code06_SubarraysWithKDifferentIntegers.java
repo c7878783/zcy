@@ -10,22 +10,22 @@ import java.util.Arrays;
 // 子数组 是数组的 连续 部分。
 // 测试链接 : https://leetcode.cn/problems/subarrays-with-k-different-integers/
 public class Code06_SubarraysWithKDifferentIntegers {
-
+	//求k个不是单调的，所谓单调指的就是l前进会更不容易超过k，r前进会更容易超过，而=k无论是l前进还是r前进都无法保证单调更接近k还是远离
 	public static int subarraysWithKDistinct(int[] arr, int k) {
-		return numsOfMostKinds(arr, k) - numsOfMostKinds(arr, k - 1);
+		return numsOfMostKinds(arr, k) - numsOfMostKinds(arr, k - 1);//不超过k的减去不超过k-1的就是严格等于k的
 	}
 
-	public static int MAXN = 20001;
+	public static int MAXN = 200001;
 
-	public static int[] cnts = new int[MAXN];
+	public static int[] cnts = new int[MAXN];//值得注意的是，输入数字只说了大于1，也就是有可能是多位数
 
 	// arr中有多少子数组，数字种类不超过k
 	// arr的长度是n，arr里的数值1~n之间
 	public static int numsOfMostKinds(int[] arr, int k) {
-		Arrays.fill(cnts, 1, arr.length + 1, 0);
+		Arrays.fill(cnts, 1, arr.length + 1, 0);//因为我走过去了就不会再走回来
 		int ans = 0;
 		for (int l = 0, r = 0, collect = 0; r < arr.length; r++) {
-			if (++cnts[arr[r]] == 1) {
+			if (++cnts[arr[r]] == 1) {//=1说明之前从没进来过
 				collect++;
 			}
 			while (collect > k) {
@@ -33,7 +33,7 @@ public class Code06_SubarraysWithKDifferentIntegers {
 					collect--;
 				}
 			}
-			ans += r - l + 1;
+			ans += r - l + 1;//此时我们的目的是不能超过k种，所以在当前r，如果满足了满的k，我们应当注意到只能l向前移动才可以远离这个k
 		}
 		return ans;
 	}

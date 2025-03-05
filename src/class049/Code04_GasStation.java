@@ -12,9 +12,10 @@ public class Code04_GasStation {
 
 	public static int canCompleteCircuit(int[] gas, int[] cost) {
 		int n = gas.length;
-		// 本来下标是0..n-1，但是扩充到0..2*n-1，i位置的余量信息在(r%n)位置
+		// 本来下标是0..n-1，但是扩充到0..2*n-1，i位置的余量信息在(r%n)位置,不需要显示的给出2n数组长度
 		// 窗口范围是[l, r)，左闭右开，也就是说窗口是[l..r-1]，r是到不了的位置
 		for (int l = 0, r = 0, sum; l < n; l = r + 1, r = l) {
+			//连l都不小于n了，说明再往下来一圈也没用,余量不足出了while才会再来到for，那这是就没必要再看有问题的这个r了，因为他左边的起点全都完蛋
 			sum = 0;
 			while (sum + gas[r % n] - cost[r % n] >= 0) {
 				// r位置即将右扩，窗口会变大
@@ -25,7 +26,7 @@ public class Code04_GasStation {
 				sum += gas[r % n] - cost[r % n];
 				// r右扩，窗口变大了
 				r++;
-			}
+			}//跳出这个while的唯二可能，一是不满足余量，而是转了一圈了
 		}
 		return -1;
 	}
