@@ -12,7 +12,7 @@ public class Code01_SortArrayByParityII {
 	public static int[] sortArrayByParityII(int[] nums) {
 		int n = nums.length;
 		for (int odd = 1, even = 0; odd < n && even < n;) {
-			if ((nums[n - 1] & 1) == 1) {
+			if ((nums[n - 1] & 1) == 1) {//从最后一位开始，不断地向前面的奇数和偶数位发货，直到发超了，说明至少有一种排完了
 				swap(nums, odd, n - 1);
 				odd += 2;
 			} else {

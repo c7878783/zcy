@@ -40,7 +40,7 @@ public class Code03_TrappingRainWater {
 		while (l <= r) {
 			if (lmax <= rmax) {
 				ans += Math.max(0, lmax - nums[l]);
-				lmax = Math.max(lmax, nums[l++]);
+				lmax = Math.max(lmax, nums[l++]);//小的那边结算，比如我的i走到了这里，说明左边真的是他的最小了，而一个点的水量取决于两侧谁最小
 			} else {
 				ans += Math.max(0, rmax - nums[r]);
 				rmax = Math.max(rmax, nums[r--]);

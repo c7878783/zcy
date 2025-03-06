@@ -9,7 +9,7 @@ public class ImplLinkedListCycleII {
     }
 
     public static ListNode detectCycle(ListNode head) {
-        if (head == null && head.next ==null && head.next.next ==null){
+        if (head == null || head.next ==null || head.next.next ==null){
             return null;
         }
 

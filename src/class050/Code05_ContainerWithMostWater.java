@@ -12,7 +12,14 @@ public class Code05_ContainerWithMostWater {
 	public static int maxArea(int[] height) {
 		int ans = 0;
 		for (int l = 0, r = height.length - 1; l < r;) {
+
 			ans = Math.max(ans, Math.min(height[l], height[r]) * (r - l));
+			// 你得把大的留下来，让小的一侧更新，才有可能在r - l缩小的情况下得到更大的数值
+			// 假设2到7最大，那么这个代码必定会划l=2，r=7的时刻，
+			// 我们假设一种错误情况，l到了2，但是r那边有一个=7之外比7位置还要大的数值
+			// 此时l=2不得不向右侧移动了，但是这就意味着，有一个2到比7大的长度下，他的右边界是比2到7更大的，也就是比=7更大的，
+			// 这就意味着，它比2到7这个答案大，2到7不是最优解，也就是说，当2到7是最优解的时候，它一定会被考虑到
+			// 至于保留这个最大值，则是上面的max操作
 			if (height[l] <= height[r]) {
 				l++;
 			} else {

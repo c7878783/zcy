@@ -13,8 +13,8 @@ public class Code06_Heaters {
 
 	// 时间复杂度O(n * logn)，因为有排序，额外空间复杂度O(1)
 	public static int findRadius(int[] houses, int[] heaters) {
-		Arrays.sort(houses);
-		Arrays.sort(heaters);
+		Arrays.sort(houses);//房屋的位置可能是随意给的
+		Arrays.sort(heaters);//加热器也是随意给的
 		int ans = 0;
 		for (int i = 0, j = 0; i < houses.length; i++) {
 			// i号房屋
@@ -33,6 +33,7 @@ public class Code06_Heaters {
 	// 当前的地点houses[i]由heaters[j + 1]来供暖，产生的半径是b
 	// 如果a < b, 说明是最优，供暖不应该跳下一个位置
 	// 如果a >= b, 说明不是最优，应该跳下一个位置
+	// 两个相等的时候，<会返回false，所以不是最优，向下走，这么处理是因为后面houses是一直增大的，heaters在同样的情况下也最好增大
 	public static boolean best(int[] houses, int[] heaters, int i, int j) {
 		return j == heaters.length - 1 
 				||

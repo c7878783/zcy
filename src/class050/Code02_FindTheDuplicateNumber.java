@@ -9,7 +9,7 @@ package class050;
 public class Code02_FindTheDuplicateNumber {
 
 	// 时间复杂度O(n)，额外空间复杂度O(1)
-	public static int findDuplicate(int[] nums) {
+	public static int findDuplicate(int[] nums) {//当作有环数组找环的起始
 		if (nums == null || nums.length < 2) {
 			return -1;
 		}
