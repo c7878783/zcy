@@ -71,6 +71,7 @@ public class Code03_RobotPassThroughBuilding {
 
 	// 初始能量为energy，max是建筑的最大高度，返回能不能通关
 	// 为什么要给定建筑的最大高度？
+	// 因为当能量超过最大值的时候，直接就通关了，省
 	public static boolean f(int energy, int max) {
 		// 注意！
 		// 如果给的能量值很大，那么后续能量增长将非常恐怖

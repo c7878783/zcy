@@ -21,10 +21,10 @@ public class Code04_FindKthSmallestPairDistance {
 			m = l + ((r - l) >> 1);
 			// 返回数字对的数量
 			cnt = f(nums, m);
-			if (cnt >= k) {
+			if (cnt >= k) {//够了k个，记录答案
 				ans = m;
 				r = m - 1;
-			} else {
+			} else {//不够k个，根据limit越大，数的数量越多这个单调性来调整
 				l = m + 1;
 			}
 		}

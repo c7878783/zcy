@@ -11,7 +11,7 @@ public class Code06_WaitingTime2 {
 	public static long minimumTime(int[] arr, int w) {
 		int min = Integer.MAX_VALUE;
 		for (int x : arr) {
-			min = Math.min(min, x);
+			min = Math.min(min, x);//他是最快的
 		}
 		long ans = 0;
 		for (long l = 0, r = (long) min * w, m; l <= r;) {
@@ -28,7 +28,7 @@ public class Code06_WaitingTime2 {
 		}
 		return ans;
 	}
-
+	//time:每个服务员一定要工作time时间长度，也就是time时间长度内它不要休息
 	public static long f(int[] arr, long time) {
 		long ans = 0;
 		for (int num : arr) {

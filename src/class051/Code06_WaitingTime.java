@@ -20,12 +20,12 @@ public class Code06_WaitingTime {
 		PriorityQueue<int[]> heap = new PriorityQueue<>((a, b) -> (a[0] - b[0]));
 		int n = arr.length;
 		for (int i = 0; i < n; i++) {
-			heap.add(new int[] { 0, arr[i] });
+			heap.add(new int[] { 0, arr[i] });//0表示从0时间开始随时服务
 		}
 		for (int i = 0; i < m; i++) {
 			int[] cur = heap.poll();
-			cur[0] += cur[1];
-			heap.add(cur);
+			cur[0] += cur[1];//表示去服务的时间点和服务结束后的时间长度加起来，用来表示可以再次服务的时间点
+			heap.add(cur);//其实这个做法在一开始的时候是，所有waiters都出去服务，然后谁回来的早谁就接着服务
 		}
 		return heap.peek()[0];
 	}
@@ -41,9 +41,10 @@ public class Code06_WaitingTime {
 		int ans = 0;
 		for (int l = 0, r = min * w, m; l <= r;) {
 			// m中点，表示一定要让服务员工作的时间！
+			// 我让每个服务员工作m时间，能不能轮到我？
 			m = l + ((r - l) >> 1);
 			// 能够给几个客人提供服务
-			if (f(arr, m) >= w + 1) {
+			if (f(arr, m) >= w + 1) {//这里的含义是需要等几个人才能服务
 				ans = m;
 				r = m - 1;
 			} else {
