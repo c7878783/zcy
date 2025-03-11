@@ -18,9 +18,12 @@ public class Code04_LargestRectangleInHistogram {
 		int ans = 0, cur, left;
 		for (int i = 0; i < n; i++) {
 			// i -> arr[i]
+			// stack存的值比现在遍历到的大，那这个cur高度画矩形只能画到遍历到的这个位置，和他stack中压的下一个，
+			// 就这段距离，是这个高度可以处理的，其他的就比他矮了
 			while (r > 0 && height[stack[r - 1]] >= height[i]) {
 				cur = stack[--r];
 				left = r == 0 ? -1 : stack[r - 1];
+				// 假设现在位置是8，7是left，9是i，那只能画出8这一个部分
 				ans = Math.max(ans, height[cur] * (i - left - 1));
 			}
 			stack[r++] = i;
