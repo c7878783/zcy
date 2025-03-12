@@ -18,12 +18,12 @@ public class Code01_MaximumWidthRamp {
 		r = 1;
 		int n = arr.length;
 		for (int i = 1; i < n; i++) {
-			if (arr[stack[r - 1]] > arr[i]) {
-				stack[r++] = i;
+			if (arr[stack[r - 1]] > arr[i]) {//比栈顶小，就往里放，下降坡
+				stack[r++] = i;//栈在维护最大宽度有哪些可能性，可能有哪些位置参与了
 			}
 		}
 		int ans = 0;
-		for (int j = n - 1; j >= 0; j--) {
+		for (int j = n - 1; j >= 0; j--) {//右侧边界是在减小的，所以左侧应该越往左越好也就是弹出越多越好
 			while (r > 0 && arr[stack[r - 1]] <= arr[j]) {
 				ans = Math.max(ans, j - stack[--r]);
 			}

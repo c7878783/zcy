@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 // 去除重复字母保证剩余字符串的字典序最小
 // 给你一个字符串 s ，请你去除字符串中重复的字母，使得每个字母只出现一次
+// 有重复的，最好是删掉前面的，比如bab，应该返回ab，删掉靠前的b
 // 需保证 返回结果的字典序最小
 // 要求不能打乱其他字符的相对位置
 // 测试链接 : https://leetcode.cn/problems/remove-duplicate-letters/
@@ -34,9 +35,9 @@ public class Code02_RemoveDuplicateLetters {
 			// 从左往右依次遍历字符，a -> 0 b -> 1 ... z -> 25
 			// cur -> cur - 'a'
 			if (!enter[cur - 'a']) {
-				while (r > 0 && stack[r - 1] > cur && cnts[stack[r - 1] - 'a'] > 0) {
-					enter[stack[r - 1] - 'a'] = false;
-					r--;
+				while (r > 0 && stack[r - 1] > cur && cnts[stack[r - 1] - 'a'] > 0) {//栈里有数，且这个数的序靠后，且后面还能遇到
+					enter[stack[r - 1] - 'a'] = false;//取出这个数
+					r--;//弹
 				}
 				stack[r++] = cur;
 				enter[cur - 'a'] = true;
