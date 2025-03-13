@@ -64,7 +64,7 @@ public class Code04_CountSubmatricesWithAllOnes {
 		int ans = 0;
 		for (int i = 0, left, len, bottom; i < m; i++) {
 			while (r > 0 && height[stack[r - 1]] >= height[i]) {
-				int cur = stack[--r];
+				int cur = stack[--r];//如果相等了会弹，但是不走下面的计算，这是因为等于的情况会在最新一个相等的位置弹出时清算
 				if (height[cur] > height[i]) {
 					// 只有height[cur] > height[i]才结算
 					// 如果是因为height[cur]==height[i]导致cur位置从栈中弹出

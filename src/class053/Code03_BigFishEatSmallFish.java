@@ -30,7 +30,7 @@ public class Code03_BigFishEatSmallFish {
 
 	public static int n;
 
-	public static int[][] stack = new int[MAXN][2];
+	public static int[][] stack = new int[MAXN][2];//索引0表示体积，1表示我要吃后面几轮
 
 	public static int r;
 
@@ -61,7 +61,7 @@ public class Code03_BigFishEatSmallFish {
 			// 0轮是初始
 			curTurns = 0;
 			while (r > 0 && stack[r - 1][0] < arr[i]) {
-				curTurns = Math.max(curTurns + 1, stack[--r][1]);
+				curTurns = Math.max(curTurns + 1, stack[--r][1]);//要是你要吃的这个鱼要吃的轮数比你多，那你得全吃了
 			}
 			stack[r][0] = arr[i];
 			stack[r++][1] = curTurns;
