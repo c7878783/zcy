@@ -38,11 +38,11 @@ public class Code01_ShortestSubarrayWithSumAtLeastK {
 			// 前n个数前缀和
 			while (h != t && sum[i] - sum[deque[h]] >= K) {
 				// 如果当前的前缀和 - 头前缀和，达标！
-				ans = Math.min(ans, i - deque[h++]);
+				ans = Math.min(ans, i - deque[h++]);//后面的不可能有比咱俩短的，走吧，你不必当左了
 			}
 			// 前i个数前缀和，从尾部加入
 			// 小 大
-			while (h != t && sum[deque[t - 1]] >= sum[i]) {
+			while (h != t && sum[deque[t - 1]] >= sum[i]) {//队列的尾部比我大，后头减去我都不一定复合条件，减你更够呛，你还更长，所以尾部弹出
 				t--;
 			}
 			deque[t++] = i;
