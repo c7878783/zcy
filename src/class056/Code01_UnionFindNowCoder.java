@@ -18,6 +18,7 @@ public class Code01_UnionFindNowCoder {
 
 	public static int MAXN = 1000001;
 
+
 	public static int[] father = new int[MAXN];
 
 	public static int[] size = new int[MAXN];
