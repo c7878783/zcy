@@ -8,6 +8,7 @@ import java.util.HashMap;
 // 给你一个长度为 n 的数组 stones ，其中 stones[i] = [xi, yi] 表示第 i 块石头的位置
 // 返回 可以移除的石子 的最大数量。
 // 测试链接 : https://leetcode.cn/problems/most-stones-removed-with-same-row-or-column/
+// 关键在于，无论如何移除，每行每列肯定都至少要留下一个，所以用一个行列集合来统一，然后在行列上有关系的石头，就肯定要移除一个
 public class Code01_MostStonesRemovedWithSameRowOrColumn {
 
 	// key : 某行

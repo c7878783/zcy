@@ -38,7 +38,7 @@ public class Code02_FindAllPeopleWithSecret {
 
 	public static int find(int i) {
 		if (i != father[i]) {
-			father[i] = find(father[i]);
+			father[i] = find(father[i]);//这个代码有个功能就是将本位置father每次修改为集合头部
 		}
 		return father[i];
 	}
