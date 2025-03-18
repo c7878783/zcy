@@ -25,7 +25,7 @@ public class c1ImplMostStonesRemovedWithSameRowOrColumn {
             if (i != father[i]){
                 i = find(father[i]);
             }
-            return i;
+            return i;//这种写法和c2的做法，缺少了隐式的路径压缩，在某些连接少的情况下可以通过，但是连接长会超出时间
         }
 
         public static void union(int i, int j){
