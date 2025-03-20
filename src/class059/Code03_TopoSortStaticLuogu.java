@@ -73,7 +73,7 @@ public class Code03_TopoSortStaticLuogu {
 	// 小根堆里弹出最小值
 	public static int pop() {
 		int ans = heap[0];
-		heap[0] = heap[--heapSize];
+		heap[0] = heap[--heapSize];//交换最底层和最上层的值以抹除弹出的数值，然后重新按照小在上向下扎入
 		// heapify的过程
 		int i = 0;
 		int l = 1;

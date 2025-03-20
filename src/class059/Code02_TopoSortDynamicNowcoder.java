@@ -73,7 +73,7 @@ public class Code02_TopoSortDynamicNowcoder {
 	// 没有拓扑排序返回false
 	public static boolean topoSort(ArrayList<ArrayList<Integer>> graph) {
 		l = r = 0;
-		for (int i = 1; i <= n; i++) {
+		for (int i = 1; i <= n; i++) {//我们没有整数0，是从1开始的，所以直接从1开始检查
 			if (indegree[i] == 0) {
 				queue[r++] = i;
 			}
