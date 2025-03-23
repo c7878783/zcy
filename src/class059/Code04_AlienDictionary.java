@@ -46,7 +46,7 @@ public class Code04_AlienDictionary {
 				}
 			}
 			if (j < cur.length() && j == next.length()) {
-				return "";
+				return "";//不允许长的在短的前面
 			}
 		}
 		int[] queue = new int[26];

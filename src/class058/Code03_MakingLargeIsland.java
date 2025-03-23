@@ -18,6 +18,7 @@ public class Code03_MakingLargeIsland {
 				}
 			}
 		}
+		//先算一个最大的块出来，因为可能存在所有都是1，这个时候是走不了后面==0才执行的ans更新逻辑，同时更新每个块的size
 		int[] sizes = new int[id];
 		int ans = 0;
 		for (int i = 0; i < n; i++) {
@@ -39,7 +40,7 @@ public class Code03_MakingLargeIsland {
 					right = j + 1 < m ? grid[i][j + 1] : 0;
 					visited[up] = true;
 					merge = 1 + sizes[up];
-					if (!visited[down]) {
+					if (!visited[down]) {//只有后三个需要判断有没有经过过，因为可能和上面的重合了
 						merge += sizes[down];
 						visited[down] = true;
 					}
